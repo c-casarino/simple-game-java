@@ -2,20 +2,19 @@ import javax.swing.JPanel;
 import java.awt.*;
 
 public class GamePanel extends JPanel {
-    final int SIZE_WIDTH = 800;
-    final int SIZE_HEIGHT = 600;
+    final int originalTileSize = 16; // 16x16 tile
+    final int scale = 3;
+    final int tileSize = originalTileSize * scale; // 48x48 tile
+
+    final int maxScreenCol = 16;
+    final int maxScreenRow = 12;
+    final int screenWidth = tileSize * maxScreenCol; // 768px
+    final int screenHeight = tileSize * maxScreenRow; // 576px
 
     public GamePanel() {
-        this.setPreferredSize(new Dimension(SIZE_WIDTH, SIZE_HEIGHT));
-        this.setBackground(Color.BLACK);
-    }
-
-    @Override
-    public void paint(Graphics g) {
-        super.paintComponent(g);
-        g.setColor(Color.WHITE);
-        g.drawString("Game Over", 50, 50);
-        g.dispose();
+        this.setPreferredSize(new Dimension(screenWidth, screenHeight));
+        this.setBackground(Color.DARK_GRAY);
+        this.setDoubleBuffered(true);
     }
 
 }
