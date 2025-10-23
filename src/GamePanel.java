@@ -1,7 +1,7 @@
 import javax.swing.JPanel;
 import java.awt.*;
 
-public class GamePanel extends JPanel {
+public class GamePanel extends JPanel implements Runnable {
     final int originalTileSize = 16; // 16x16 tile
     final int scale = 3;
     final int tileSize = originalTileSize * scale; // 48x48 tile
@@ -11,10 +11,25 @@ public class GamePanel extends JPanel {
     final int screenWidth = tileSize * maxScreenCol; // 768px
     final int screenHeight = tileSize * maxScreenRow; // 576px
 
+    Thread gameThread;
+
     public GamePanel() {
         this.setPreferredSize(new Dimension(screenWidth, screenHeight));
         this.setBackground(Color.DARK_GRAY);
         this.setDoubleBuffered(true);
     }
 
+    public void startGameThread() {
+        gameThread = new Thread(this);
+        gameThread.start();
+    }
+
+    @Override
+    public void run() {
+        // NOTE: run() will be called every time gameThread is started
+
+        while (gameThread != null) {
+        System.out.println("The game loop is running.");
+        }
+    }
 }
