@@ -2,6 +2,7 @@ import javax.swing.JPanel;
 import java.awt.*;
 
 public class GamePanel extends JPanel implements Runnable {
+    // Screen Size
     final int originalTileSize = 16; // 16x16 tile
     final int scale = 3;
     final int tileSize = originalTileSize * scale; // 48x48 tile
@@ -11,8 +12,12 @@ public class GamePanel extends JPanel implements Runnable {
     final int screenWidth = tileSize * maxScreenCol; // 768px
     final int screenHeight = tileSize * maxScreenRow; // 576px
 
+    // "Imports"
     Thread gameThread;
     KeyHandler keyHandler = new KeyHandler();
+
+    // FPS
+    int FPS = 60;
 
     int playerX, playerY = 100;
     int playerSpeed = 4;
@@ -20,7 +25,7 @@ public class GamePanel extends JPanel implements Runnable {
     public GamePanel() {
         this.setPreferredSize(new Dimension(screenWidth, screenHeight));
         this.setBackground(Color.BLACK);
-        this.setDoubleBuffered(true);
+//        this.setDoubleBuffered(true); -- Removed it caused lags on Linux
         this.setFocusable(true);
         this.addKeyListener(keyHandler);
     }
@@ -33,10 +38,28 @@ public class GamePanel extends JPanel implements Runnable {
     @Override
     public void run() {
         // NOTE: run() will be called every time gameThread is started
+        double drawInterval = 1000000000 / FPS;
+        double nextDrawTime = System.nanoTime();
 
         while (gameThread != null) {
             update();
             repaint();
+
+            try {
+                double remainingTime = nextDrawTime - System.nanoTime();
+                remainingTime = remainingTime / 1000000;
+
+                if (remainingTime < 0) {
+                    remainingTime = 0;
+                }
+
+                Thread.sleep((long) remainingTime);
+
+                nextDrawTime += drawInterval;
+
+            } catch (InterruptedException e) {
+                e.printStackTrace();
+            }
         }
     }
 
