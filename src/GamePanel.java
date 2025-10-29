@@ -25,9 +25,9 @@ public class GamePanel extends JPanel implements Runnable {
     public GamePanel() {
         this.setPreferredSize(new Dimension(screenWidth, screenHeight));
         this.setBackground(Color.BLACK);
-//        this.setDoubleBuffered(true); -- Removed it caused lags on Linux
-        this.setFocusable(true);
+        this.setDoubleBuffered(true);
         this.addKeyListener(keyHandler);
+        this.setFocusable(true);
     }
 
     public void startGameThread() {
@@ -66,19 +66,15 @@ public class GamePanel extends JPanel implements Runnable {
     public void update() {
         if (keyHandler.upPressed) {
             playerY -= playerSpeed;
-            System.out.println("playerY: " + playerY);
         }
         else if (keyHandler.downPressed) {
             playerY += playerSpeed;
-            System.out.println("playerY: " + playerY);
         }
         else if (keyHandler.leftPressed) {
             playerX -= playerSpeed;
-            System.out.println("playerX: " + playerX);
         }
         else if (keyHandler.rightPressed) {
             playerX += playerSpeed;
-            System.out.println("playerX: " + playerX);
         }
     }
 
