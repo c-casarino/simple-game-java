@@ -19,15 +19,16 @@ public class GamePanel extends JPanel implements Runnable {
     // FPS
     int FPS = 60;
 
-    int playerX, playerY = 100;
+    int playerX = 100;
+    int playerY = 100;
     int playerSpeed = 4;
 
     public GamePanel() {
         this.setPreferredSize(new Dimension(screenWidth, screenHeight));
         this.setBackground(Color.BLACK);
         this.setDoubleBuffered(true);
-        this.addKeyListener(keyHandler);
         this.setFocusable(true);
+        this.addKeyListener(keyHandler);
     }
 
     public void startGameThread() {
